@@ -3,7 +3,7 @@ import { Loader, Plus } from "lucide-react";
 import { toast } from "react-toastify";
 import WrapperMain from "./components/wrapper/WrapperMain";
 import { useUser } from "@clerk/nextjs";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { addProject, getAllprojects } from "./server";
 import { Project } from "@/lib/type";
 import ProjectCard from "./components/ProjectCard";
@@ -17,18 +17,24 @@ export default function Home() {
   const [IsLoading, setIsLoading] = useState<boolean>(false);
   const [projects, setProjects] = useState<Project[]>([]);
 
-  const fetchProject = async () => {
-    if (!email) return;
+const fetchProject = useCallback(async () => {
+  if (!email) return;
+
+  try {
+    const allProjects = await getAllprojects(email);
+    setProjects(allProjects);
     setIsLoading(true);
-    try {
-      const Allproject = await getAllprojects(email);
-      setProjects(Allproject);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  } catch (e) {
+    console.error(e);
+  } finally {
+    setIsLoading(false);
+  }
+}, [email]);
+
+useEffect(() => {
+  fetchProject();
+}, [fetchProject]);
+
 
   const handleCreateProject = async () => {
     if (!projectName.trim()) {
