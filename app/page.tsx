@@ -1,9 +1,9 @@
 "use client"
-import { Divide, Loader, Plus } from "lucide-react";
+import { Loader, Plus } from "lucide-react";
 import { toast } from 'react-toastify';
 import WrapperMain from "./components/wrapper/WrapperMain";
 import { useUser } from "@clerk/nextjs";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { addProject, getAllprojects } from "./server";
 import { Project } from "@/lib/type";
 import ProjectCard from "./components/ProjectCard";
@@ -13,31 +13,31 @@ export default function Home() {
   const {user}=useUser();
   const email = user?.primaryEmailAddress?.emailAddress as string;
   const [projectName , setProjectName] = useState('');
-  const [isSubmitting , setIsSubmitting] = useState<Boolean>(false);
+  const [isSubmitting , setIsSubmitting] = useState<boolean>(false);
 
-  const [IsLoading , setIsLoading] = useState<Boolean>(false);
+  const [IsLoading , setIsLoading] = useState<boolean>(false);
   const [projects , setProjects] = useState<Project[]>([]);
  
 
 
+ const fetchProject = useCallback(async () => {
+  if (!email) return;
+  setIsLoading(true);
+  try {
+    const allProjects = await getAllprojects(email);
+    setProjects(allProjects);
 
-
-
-
-  const fetchProject = async () => {
-    if(!email) return
-
-    try{
-      const Allproject = await getAllprojects(email);
-      setProjects(Allproject);
-      setIsLoading(true);
-    }catch(e){
-      console.error(e)
-    }finally{
-      setIsLoading(false);
-    }
-  
+  } catch (e) {
+    console.error(e);
+  } finally {
+    setIsLoading(false);
   }
+}, [email]);
+
+useEffect(() => {
+  fetchProject();
+}, [fetchProject]);
+
 
   const handleCreateProject = async () =>{
     if(!projectName.trim()){
@@ -101,22 +101,24 @@ export default function Home() {
     </div>
   </div>
 </dialog>
-{/* 
- {IsLoading && (
+
+ {IsLoading ? (
         <div className="flex  flex-col gap-4 w-full">
   <div className="skeleton h-32 w-full"></div>
   <div className="skeleton h-4 w-28"></div>
   <div className="skeleton h-4 w-full"></div>
   <div className="skeleton h-4 w-full"></div>
 </div>
-      )} */}
-
+      ) : (
 <div className="flex flex-col gap-4 mt-5">
-    {projects.map((project)=>(
-      <ProjectCard project={project} />
+    {projects.map((project,index)=>(
+      <ProjectCard project={project} key={index} />
     ))}
 </div>
         
+      )}
+
+
 
     </WrapperMain>
     

@@ -1,7 +1,7 @@
 'use client'
-import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import Image from 'next/image'
 
 type LanguageType = {
     image : string,
@@ -16,7 +16,7 @@ function LanguageCard({image,label,href}:LanguageType) {
         <div className="card bg-gradient-to-br from-base-100 to-base-200 shadow-lg rounded-2xl overflow-hidden border  transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-opacity-25 h-full">
           <figure className="relative w-full aspect-[4/3] overflow-hidden">
             {/* Image avec effet de zoom au hover */}
-            <img
+            <Image
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               src={image}
               alt={label}

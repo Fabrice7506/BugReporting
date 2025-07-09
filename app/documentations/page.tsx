@@ -9,7 +9,7 @@ function documentation() {
   return (
     <WrapperMain>
       <div className="mb-5">
-        <h1 className="text-3xl font-bold my-5">Tutoriels d'installation</h1>
+        <h1 className="text-3xl font-bold my-5">Tutoriels d&apos;installation </h1>
         <p className="text-xl">
           Voir des exemples de configuration de reportBug et sur différents
           frameworks et language.

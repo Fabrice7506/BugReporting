@@ -6,9 +6,10 @@ import { Project } from "@/lib/type";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
-function page({ params }: { params: Promise<{ projectId: string }> }) {
+function Page({ params }: { params: Promise<{ projectId: string }> }) {
+  
   const [project, setProject] = useState<Project | null>(null);
-  const [loading, setIsLoading] = useState<Boolean>(false);
+  const [loading, setIsLoading] = useState<boolean>(false);
 
   const fetchProject = async (projectId: string) => {
     setIsLoading(true);
@@ -67,4 +68,4 @@ function page({ params }: { params: Promise<{ projectId: string }> }) {
   );
 }
 
-export default page;
+export default Page;

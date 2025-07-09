@@ -1,5 +1,4 @@
 // components/NavLinks.tsx
-import NavLink from "./NavLink";
 import { Links } from "../widget/Links";
 import Link from "next/link";
 

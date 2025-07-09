@@ -1,7 +1,6 @@
 "use client";
 import { UserButton, useUser } from "@clerk/nextjs";
 import LogoBrand from "../logo";
-import { Links } from "../widget/Links";
 import NavLinks from "./NavLink";
 
 import React, { useEffect, useState } from "react";
@@ -10,7 +9,7 @@ import { checkAndAddUser } from "@/app/server";
 import { useTheme } from "../themeContext";
 
 function NavBar() {
-  const [isOpen, setIsOpen] = useState<Boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const { user } = useUser();
 

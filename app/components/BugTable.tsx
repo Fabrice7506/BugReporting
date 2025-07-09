@@ -33,16 +33,21 @@ const BugTable = ({ bugs , handleStatutChange }: BugTableType) => {
     return <p className="text-gray-500">0 bug trouvé.</p>;
   }
 
-  const groupedBugs = useMemo(() => groupBugs(bugs), [bugs]);
+ const groupedBugs = useMemo(() => {
+  return groupBugs(bugs);
+}, [bugs]);
 
-  const trieGroup = useMemo(() => {
-    return groupedBugs.sort(([_, groupeA], [__, groupeB]) => {
-      const dateA = new Date(groupeA[0].createdAt).getTime();
-      const dateB = new Date(groupeB[0].createdAt).getTime();
+const trieGroup = useMemo(() => {
+  if (!groupedBugs || groupedBugs.length === 0) return [];
 
-      return sortAsc ? dateA - dateB : dateB - dateA;
-    });
-  }, [groupedBugs, bugs]);
+  return [...groupedBugs].sort(([, groupeA], [, groupeB]) => {
+    const dateA = new Date(groupeA[0].createdAt).getTime();
+    const dateB = new Date(groupeB[0].createdAt).getTime();
+
+    return sortAsc ? dateA - dateB : dateB - dateA;
+  });
+}, [groupedBugs, sortAsc]);
+
 
   const totalPages = Math.ceil(trieGroup.length / pageSize);
   const pageGroups = trieGroup.slice(

@@ -9,7 +9,7 @@ type Props = {
   enV1?:string,
   enV2?:string,
 }
-function CodeBlog({code,language,enV1,enV2}:Props) {
+function CodeBlog({code,enV1,enV2}:Props) {
   const [copied,setCopied] = useState(false);
   const fullText = [enV1,enV2,code].filter(Boolean).join('n')
 

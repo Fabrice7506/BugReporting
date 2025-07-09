@@ -68,7 +68,7 @@ const Tabs: React.FC<TabsProps> = ({ children }) => {
   );
 };
 
-const Tab: React.FC<TabProps> = ({ label, children }) => {
+const Tab: React.FC<TabProps> = ({  children }) => {
   return <div>{children}</div>;
 };
 

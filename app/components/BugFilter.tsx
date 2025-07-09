@@ -6,7 +6,7 @@ import BugTable from "./BugTable";
 import { changeStatus, deleteProject } from "../server";
 import CodeBlog from "./codeBlog";
 import { Loader } from "lucide-react";
-import { toast } from "react-toastify";
+
 import { useRouter } from "next/navigation";
 
 type BugFilterType = {
@@ -14,7 +14,7 @@ type BugFilterType = {
   fetchProject: (id: string) => void;
 };
 function BugFilter({ project, fetchProject }: BugFilterType) {
-  const [updatedBugs, setUpdatedBugs] = useState<Bug[]>(project.bugs);
+  const [updatedBugs] = useState<Bug[]>(project.bugs);
   const env1 = `NEXT_PUBLIC_BUG_PROJECT_ID=${project.id}`;
   const env2 = `NEXT_PUBLIC_BUG_API_KEY=${project.apiKey}`;
   const [confirmationName, setconfirmationName] = useState("");
@@ -42,7 +42,7 @@ function BugFilter({ project, fetchProject }: BugFilterType) {
       case "tous":
         return [...updatedBugs].sort(
           (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(b.createdAt).getTime()
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
         );
       default:
         return updatedBugs;
@@ -66,7 +66,7 @@ function BugFilter({ project, fetchProject }: BugFilterType) {
     setisDelecting(true);
 
     try {
-      await deleteProject(project.id);
+      await deleteProject(id);
 
       
       router.push('/');

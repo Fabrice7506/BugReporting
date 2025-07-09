@@ -105,7 +105,7 @@ export async function getProjectById(projectId: string): Promise<Project | null>
 
 export async function changeStatus(bugIds: string[] , newStatus : number){
      try {
-    const update = await prisma.bug.updateMany({
+     await prisma.bug.updateMany({
       where: {
         id: { in: bugIds},
       },
