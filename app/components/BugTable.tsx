@@ -29,10 +29,6 @@ const BugTable = ({ bugs , handleStatutChange }: BugTableType) => {
   const [currentPage, setcurrentPage] = useState(1);
   const [editingKey, setEditingKey] = useState<string | null>(null);
 
-  if (bugs.length == 0) {
-    return <p className="text-gray-500">0 bug trouvé.</p>;
-  }
-
  const groupedBugs = useMemo(() => {
   return groupBugs(bugs);
 }, [bugs]);
@@ -47,6 +43,10 @@ const trieGroup = useMemo(() => {
     return sortAsc ? dateA - dateB : dateB - dateA;
   });
 }, [groupedBugs, sortAsc]);
+
+if (bugs.length === 0) {
+  return <p className="text-gray-500">0 bug trouvé.</p>;
+}
 
 
   const totalPages = Math.ceil(trieGroup.length / pageSize);
