@@ -20,6 +20,8 @@ function LanguageCard({image,label,href}:LanguageType) {
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               src={image}
               alt={label}
+              width={100}
+              height={100}
             />
 
             {/* Overlay avec effet de fondu */}
